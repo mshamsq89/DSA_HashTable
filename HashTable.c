@@ -44,6 +44,40 @@ void insert(int key, int data)
     }
     hashArray[hashIndex] = item;
 }
+
+DataItem* search(int key)
+{
+    int hashIndex = hashCode(key);
+
+    while(hashArray[hashIndex] != NULL)
+    {
+        if (hashArray[hashIndex]->key == key)
+        {
+            return hashArray[hashIndex];
+        }
+        hashIndex++;
+        hashIndex %= MAX;
+    }
+    return NULL;
+}
+
+void delete(int key)
+{
+    int hashIndex = hashCode(key);
+
+    while(hashArray[hashIndex] != NULL)
+    {
+        if (hashArray[hashIndex]->key == key)
+        {
+            item = hashArray[hashIndex];
+            free(item);
+            hashArray[hashIndex] = dummyItem;
+            return;
+        }
+        hashIndex++;
+        hashIndex %= MAX;
+    }
+}
 int main()
 {
     dummyItem = (DataItem *)malloc(sizeof(DataItem));
@@ -58,6 +92,8 @@ int main()
     insert(7,77);
     insert(2,22);
     display();
-   
+    delete(3);
+    delete(7);
+    display();   
     return 0;
 }
